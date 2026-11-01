@@ -530,6 +530,124 @@ main,
     box-sizing: border-box;
   }
 }
+/* COINLY - MY COLLECTION DARK THEME */
+
+/* Collection toolbar */
+#collection-page .toolbar {
+  background: #0B1527;
+  border: 1px solid rgba(215, 142, 40, 0.2);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Collection search */
+#collection-page #collection-search {
+  background: #14223A !important;
+  color: #FFFFFF !important;
+  border: 1px solid #354966 !important;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+#collection-page #collection-search::placeholder {
+  color: #9EADC2;
+}
+
+#collection-page #collection-search:focus {
+  outline: none;
+  border-color: #D78E28 !important;
+  box-shadow: 0 0 0 3px rgba(215, 142, 40, 0.15);
+}
+
+/* Export button */
+#collection-page #export-btn {
+  background: #D78E28 !important;
+  color: #101827 !important;
+  border: none !important;
+  border-radius: 10px;
+}
+
+/* Collection grid and empty state */
+#collection-page #collection-grid {
+  background: transparent;
+  color: #FFFFFF;
+}
+
+#collection-page #collection-grid > :not(.coin-card) {
+  background: #14223A !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(215, 142, 40, 0.2);
+  border-radius: 18px;
+}
+
+/* Mobile layout */
+@media (max-width: 650px) {
+  #collection-page .toolbar {
+    flex-direction: column;
+  }
+
+  #collection-page #collection-search,
+  #collection-page #export-btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+/* COINLY - MY PROFILE DARK THEME */
+
+/* Main profile panel */
+#profile-page .profile-panel {
+  background: #0B1527 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(215, 142, 40, 0.3);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile heading */
+#profile-page .profile-panel h2 {
+  color: #FFFFFF !important;
+}
+
+/* Collector profile label */
+#profile-page .eyebrow {
+  color: #D78E28 !important;
+}
+
+/* Profile details text */
+#profile-page #profile-details {
+  color: #FFFFFF !important;
+}
+
+/* Profile progress bar background */
+#profile-page #profile-details progress {
+  accent-color: #D78E28;
+}
+
+/* Rarity notice */
+#profile-page .notice {
+  background: #263B59 !important;
+  color: #F5D9A8 !important;
+  border: 1px solid rgba(215, 142, 40, 0.25);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+/* Profile export button */
+#profile-page #profile-export {
+  background: #D78E28 !important;
+  color: #101827 !important;
+  border: none !important;
+  border-radius: 10px;
+}
+
+/* Profile export hover */
+#profile-page #profile-export:hover {
+  background: #E9A943 !important;
+  transform: translateY(-2px);
+}
 </style>
 </head>
 <body>
