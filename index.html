@@ -379,6 +379,157 @@ main,
   color: #FFFFFF;
   border-radius: 20px;
 }
+
+/* COINLY STATISTIC CARDS */
+.stat {
+  background: #14223A !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(215, 142, 40, 0.25);
+  border-radius: 18px !important;
+  padding: 20px;
+  transition: all 0.25s ease;
+}
+
+.stat:hover {
+  background: #203552 !important;
+  transform: translateY(-4px);
+  border-color: #D78E28;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label,
+.stat-number {
+  color: #FFFFFF !important;
+}
+
+.stat-note {
+  color: #B8C5D8 !important;
+}
+
+/* COINLY DARK HEADER */
+#app > header {
+  background: #0B1527 !important;
+  color: #FFFFFF !important;
+  border-bottom: 1px solid rgba(215, 142, 40, 0.3);
+}
+
+/* Brand title */
+#app > header .brand h1 {
+  color: #FFFFFF !important;
+}
+
+/* Brand tagline */
+#app > header .brand p {
+  color: #B8C5D8 !important;
+}
+
+/* Brand icon */
+#app > header .brand-icon {
+  background: transparent;
+  color: #D78E28 !important;
+  border-color: #D78E28 !important;
+}
+
+/* Account label */
+#account-label {
+  color: #FFFFFF !important;
+}
+
+/* Sign out button */
+#signout-btn {
+  background: #D78E28 !important;
+  color: #101827 !important;
+  border: none;
+  border-radius: 10px;
+}
+
+/* COINLY DARK NAVIGATION */
+#app nav {
+  background: #0B1527 !important;
+  border-bottom: 1px solid rgba(215, 142, 40, 0.2);
+  padding: 12px 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Navigation buttons */
+#app nav .nav-btn {
+  background: transparent !important;
+  color: #B8C5D8 !important;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 11px 18px;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+#app nav .nav-btn:hover {
+  background: #203552 !important;
+  color: #FFFFFF !important;
+}
+
+/* Active tab */
+#app nav .nav-btn.active {
+  background: #263B59 !important;
+  color: #D78E28 !important;
+  border-color: #D78E28;
+}
+/* COINLY DARK CATALOGUE TOOLBAR */
+#catalogue-page .toolbar {
+  background: #0B1527;
+  border: 1px solid rgba(215, 142, 40, 0.2);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Search input and filter dropdowns */
+#catalogue-page .toolbar input,
+#catalogue-page .toolbar select {
+  background: #14223A !important;
+  color: #FFFFFF !important;
+  border: 1px solid #354966 !important;
+  border-radius: 10px;
+  padding: 12px 14px;
+  outline: none;
+}
+
+/* Search placeholder */
+#catalogue-page #search::placeholder {
+  color: #9EADC2;
+}
+
+/* Focus effect */
+#catalogue-page .toolbar input:focus,
+#catalogue-page .toolbar select:focus {
+  border-color: #D78E28 !important;
+  box-shadow: 0 0 0 3px rgba(215, 142, 40, 0.15);
+}
+
+/* Dropdown options */
+#catalogue-page .toolbar select option {
+  background: #14223A;
+  color: #FFFFFF;
+}
+
+/* Catalogue note */
+#catalogue-page > .subtitle {
+  color: #9EADC2 !important;
+}
+
+/* Small-screen layout */
+@media (max-width: 650px) {
+  #catalogue-page .toolbar {
+    flex-direction: column;
+  }
+
+  #catalogue-page .toolbar input,
+  #catalogue-page .toolbar select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
 </style>
 </head>
 <body>
