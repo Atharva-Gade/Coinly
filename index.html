@@ -648,6 +648,62 @@ main,
   background: #E9A943 !important;
   transform: translateY(-2px);
 }
+/* COINLY SERIES BROWSER */
+
+.series-card {
+  background: #14223A;
+  color: #FFFFFF;
+  border: 1px solid rgba(215, 142, 40, 0.25);
+  border-radius: 20px;
+  padding: 20px;
+  transition: all 0.25s ease;
+}
+
+.series-card:hover {
+  background: #203552;
+  transform: translateY(-5px);
+  border-color: #D78E28;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+.series-art {
+  margin-bottom: 15px;
+}
+
+.series-art img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.series-info h3 {
+  color: #FFFFFF;
+}
+
+.series-info p,
+.series-country {
+  color: #B8C5D8;
+}
+
+.series-country {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.series-heading {
+  grid-column: 1 / -1;
+  color: #FFFFFF;
+  margin-bottom: 15px;
+}
+
+.series-heading h2 {
+  color: #FFFFFF;
+  margin-top: 18px;
+}
+
+.series-heading p {
+  color: #B8C5D8;
+}
 </style>
 </head>
 <body>
@@ -734,6 +790,7 @@ main,
 <!-- PART 2 CONTINUES HERE -->
 
 <script>
+let activeSeries = null;
 /* COINLY CONFIGURATION */
 const SUPABASE_URL = "https://qynchzkymilktetvvuqd.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Mr4y7Hmngq6b0cEX262fVg_YDcevm4Z";
@@ -741,29 +798,81 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* STARTER WORLD COIN CATALOGUE
    Each entry represents a design. Add verified years as the catalogue grows. */
+
 const coins = [
-  {id:"india-rupee-symbol-1",name:"Rupee Symbol",country:"India",currency:"INR",denomination:"₹1",years:[2015],category:"Circulation",description:"Indian one-rupee coin featuring the rupee symbol."},
-  {id:"india-hasta-mudra-2",name:"Hasta Mudra",country:"India",currency:"INR",denomination:"₹2",years:[2008,2009,2010,2011],category:"Commemorative",description:"Indian two-rupee design featuring a hand gesture."},
-  {id:"india-unity-diversity-2",name:"Unity in Diversity",country:"India",currency:"INR",denomination:"₹2",years:[2006],category:"Commemorative",description:"Indian commemorative two-rupee design."},
-  {id:"india-grain-5",name:"Grain Series",country:"India",currency:"INR",denomination:"₹5",years:[2019],category:"Circulation",description:"Indian five-rupee grain-themed design."},
-  {id:"usa-lincoln-cent",name:"Lincoln Shield Cent",country:"United States",currency:"USD",denomination:"1 cent",years:[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],category:"Circulation",description:"One-cent coin with Abraham Lincoln on the obverse and the Union Shield on the reverse."},
-  {id:"usa-jefferson-nickel",name:"Jefferson Nickel",country:"United States",currency:"USD",denomination:"5 cents",years:[2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],category:"Circulation",description:"Five-cent coin featuring Thomas Jefferson."},
-  {id:"usa-roosevelt-dime",name:"Roosevelt Dime",country:"United States",currency:"USD",denomination:"10 cents",years:[1965,1970,1980,1990,2000,2010,2020,2024],category:"Circulation",description:"Ten-cent coin featuring Franklin D. Roosevelt."},
-  {id:"uk-one-pound",name:"One Pound",country:"United Kingdom",currency:"GBP",denomination:"£1",years:[2017,2018,2019,2020,2021,2022,2023,2024],category:"Circulation",description:"Modern twelve-sided one-pound coin."},
-  {id:"uk-two-pence",name:"Two Pence",country:"United Kingdom",currency:"GBP",denomination:"2p",years:[1971,1980,1990,2000,2010,2020,2024],category:"Circulation",description:"British two-pence coin."},
-  {id:"uk-fifty-pence",name:"Fifty Pence",country:"United Kingdom",currency:"GBP",denomination:"50p",years:[1969,1997,2008,2011,2020,2022,2023,2024],category:"Circulation",description:"British fifty-pence coin; special designs are also issued."},
-  {id:"euro-germany-1",name:"German One Euro",country:"Germany",currency:"EUR",denomination:"€1",years:[2002,2005,2010,2015,2020,2024],category:"Circulation",description:"German one-euro coin featuring the federal eagle."},
-  {id:"euro-france-2",name:"French Two Euro",country:"France",currency:"EUR",denomination:"€2",years:[2002,2005,2010,2015,2020,2024],category:"Circulation",description:"French two-euro circulation coin."},
-  {id:"euro-italy-50c",name:"Italian Fifty Cent",country:"Italy",currency:"EUR",denomination:"50 cents",years:[2002,2005,2010,2015,2020,2024],category:"Circulation",description:"Italian fifty-cent euro coin."},
-  {id:"canada-toonie",name:"Toonie",country:"Canada",currency:"CAD",denomination:"$2",years:[1996,2000,2005,2010,2015,2020,2024],category:"Circulation",description:"Canadian two-dollar coin featuring a polar bear on the standard design."},
-  {id:"canada-loonie",name:"Loonie",country:"Canada",currency:"CAD",denomination:"$1",years:[1987,1990,2000,2010,2020,2024],category:"Circulation",description:"Canadian one-dollar coin featuring the common loon."},
-  {id:"australia-one-dollar",name:"One Dollar",country:"Australia",currency:"AUD",denomination:"$1",years:[1984,1990,2000,2010,2020,2024],category:"Circulation",description:"Australian one-dollar coin featuring five kangaroos."},
-  {id:"japan-100-yen",name:"100 Yen",country:"Japan",currency:"JPY",denomination:"¥100",years:[1967,1980,1990,2000,2010,2020,2024],category:"Circulation",description:"Japanese one-hundred-yen coin featuring cherry blossoms."},
-  {id:"japan-500-yen",name:"500 Yen",country:"Japan",currency:"JPY",denomination:"¥500",years:[2000,2010,2020,2021,2022,2023,2024],category:"Circulation",description:"Japanese five-hundred-yen coin."},
-  {id:"china-one-yuan",name:"One Yuan",country:"China",currency:"CNY",denomination:"¥1",years:[1999,2005,2010,2015,2020,2024],category:"Circulation",description:"Chinese one-yuan circulation coin."},
-  {id:"south-africa-five-rand",name:"Five Rand",country:"South Africa",currency:"ZAR",denomination:"R5",years:[2004,2010,2015,2020,2024],category:"Circulation",description:"South African five-rand coin."},
-  {id:"mexico-ten-pesos",name:"Ten Pesos",country:"Mexico",currency:"MXN",denomination:"$10",years:[1997,2000,2010,2020,2024],category:"Circulation",description:"Mexican ten-peso circulation coin."},
-  {id:"singapore-one-dollar",name:"One Dollar",country:"Singapore",currency:"SGD",denomination:"$1",years:[1987,1990,2000,2010,2020,2024],category:"Circulation",description:"Singapore one-dollar circulation coin."}
+  // 🇮🇳 INDIA
+  {
+    id:"india-rupee-symbol-1",
+    name:"Rupee Symbol",
+    country:"India",
+    currency:"INR",
+    denomination:"₹1",
+    years:[2011,2012,2013,2014,2015,2016,2017,2018,2019],
+    category:"Circulation",
+    description:"Indian one-rupee coin featuring the rupee symbol."
+  },
+  {
+    id:"india-hasta-mudra-2",
+    name:"Hasta Mudra",
+    country:"India",
+    currency:"INR",
+    denomination:"₹2",
+    years:[2007,2008,2009,2010,2011],
+    category:"Commemorative",
+    description:"Indian two-rupee design featuring a hand gesture."
+  },
+  {
+    id:"india-unity-diversity-2",
+    name:"Unity in Diversity",
+    country:"India",
+    currency:"INR",
+    denomination:"₹2",
+    years:[2005,2006,2007],
+    category:"Commemorative",
+    description:"Indian commemorative two-rupee design with a cross on the reverse."
+  },
+  {
+    id:"india-grain-5",
+    name:"Grain Series",
+    country:"India",
+    currency:"INR",
+    denomination:"₹5",
+    years:[2019,2020,2021,2022,2023,2024,2025,2026],
+    category:"Circulation",
+    description:"Indian five-rupee grain-themed design."
+  },
+
+  // 🇺🇸 UNITED STATES
+  {
+    id:"usa-lincoln-cent",
+    name:"Lincoln Shield Cent",
+    country:"United States",
+    currency:"USD",
+    denomination:"1 cent",
+    years:[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],
+    category:"Circulation",
+    description:"One-cent coin with Abraham Lincoln on the obverse and the Union Shield on the reverse."
+  },
+  {
+    id:"usa-jefferson-nickel",
+    name:"Jefferson Nickel",
+    country:"United States",
+    currency:"USD",
+    denomination:"5 cents",
+    years:[2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],
+    category:"Circulation",
+    description:"Five-cent coin featuring Thomas Jefferson."
+  },
+  {
+    id:"usa-roosevelt-dime",
+    name:"Roosevelt Dime",
+    country:"United States",
+    currency:"USD",
+    denomination:"10 cents",
+    years:[1965,1970,1980,1990,2000,2010,2020,2024],
+    category:"Circulation",
+    description:"Ten-cent coin featuring Franklin D. Roosevelt."
+  }
 ];
 
 let owned = {};
@@ -975,17 +1084,97 @@ function renderCountryFilter() {
   select.value = countries.includes(previous)?previous:"all";
 }
 
+
 function renderCatalogue() {
   const search = $("search").value.trim().toLowerCase();
   const country = $("country-filter").value;
   const filter = $("ownership-filter").value;
-  const results = coins.filter(coin=>{
-    const text = [coin.name,coin.country,coin.currency,coin.denomination,coin.category,coin.description,...coin.years].join(" ").toLowerCase();
-    return (!search||text.includes(search)) &&
-      (country==="all"||coin.country===country) &&
-      (filter==="all"||(filter==="owned"?owns(coin):!owns(coin)));
+
+  const results = coins.filter(coin => {
+    const text = [
+      coin.name,
+      coin.series,
+      coin.country,
+      coin.currency,
+      coin.denomination,
+      coin.category,
+      coin.description,
+      ...coin.years
+    ].join(" ").toLowerCase();
+
+    return (!search || text.includes(search)) &&
+      (country === "all" || coin.country === country) &&
+      (filter === "all" || (filter === "owned" ? owns(coin) : !owns(coin)));
   });
-  $("coin-grid").innerHTML = results.length?results.map(coin=>cardHTML(coin)).join(""):'<div class="empty">No matching coins found. Try another search or country.</div>';
+
+  // SERIES OPEN: display individual coins
+  if (activeSeries) {
+    const seriesCoins = results.filter(
+      coin => coin.series === activeSeries
+    );
+
+    if (!seriesCoins.length) {
+      activeSeries = null;
+      renderCatalogue();
+      return;
+    }
+
+    $("coin-grid").innerHTML = `
+      <div class="series-heading">
+        <button class="btn btn-secondary series-back">
+          ← Back to Series
+        </button>
+        <h2>${escapeHTML(activeSeries)}</h2>
+        <p>${seriesCoins.length} matching coin design(s)</p>
+      </div>
+      ${seriesCoins.map(coin => cardHTML(coin)).join("")}
+    `;
+    return;
+  }
+
+  // SERIES OVERVIEW: group coins by series
+  const groups = {};
+
+  results.forEach(coin => {
+    const name = coin.series || coin.name;
+
+    if (!groups[name]) {
+      groups[name] = [];
+    }
+
+    groups[name].push(coin);
+  });
+
+  const seriesNames = Object.keys(groups).sort();
+
+  $("coin-grid").innerHTML = seriesNames.length
+    ? seriesNames.map(name => {
+        const group = groups[name];
+        const firstCoin = group[0];
+        const ownedCount = group.filter(owns).length;
+
+        return `
+          <article class="series-card">
+            <div class="series-art">
+              ${coinArt(firstCoin)}
+            </div>
+            <div class="series-info">
+              <div class="series-country">
+                ${escapeHTML(firstCoin.country)}
+              </div>
+              <h3>${escapeHTML(name)}</h3>
+              <p>${group.length} coin design(s)</p>
+              <p>${ownedCount} owned</p>
+              <button
+                class="btn btn-primary series-open"
+                data-series="${escapeHTML(name)}">
+                Explore Series →
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("")
+    : '<div class="empty">No matching series found. Try another search or country.</div>';
 }
 
 function renderCollection() {
@@ -1236,6 +1425,20 @@ async function initializeCoinly() {
 
 setAuthMode(true);
 initializeCoinly();
+$("coin-grid").addEventListener("click", event => {
+  const openButton = event.target.closest(".series-open");
+
+  if (openButton) {
+    activeSeries = openButton.dataset.series;
+    renderCatalogue();
+    return;
+  }
+
+  if (event.target.closest(".series-back")) {
+    activeSeries = null;
+    renderCatalogue();
+  }
+});
 </script>
 </body>
 </html>
