@@ -1545,7 +1545,7 @@ async function initializeCoinly() {
 
 setAuthMode(true);
 initializeCoinly();
-$("coin-grid").addEventListener("click", event => {
+document.addEventListener("click", event => {
   const openButton = event.target.closest(".series-open");
 
   if (openButton) {
@@ -1554,7 +1554,9 @@ $("coin-grid").addEventListener("click", event => {
     return;
   }
 
-  if (event.target.closest(".series-back")) {
+  const backButton = event.target.closest(".series-back");
+
+  if (backButton) {
     activeSeries = null;
     renderCatalogue();
   }
