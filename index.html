@@ -791,6 +791,7 @@ main,
 
 <script>
 let activeSeries = null;
+let activeCollectionSeries = null;
 /* COINLY CONFIGURATION */
 const SUPABASE_URL = "https://qynchzkymilktetvvuqd.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Mr4y7Hmngq6b0cEX262fVg_YDcevm4Z";
@@ -1299,9 +1300,84 @@ function renderCatalogue() {
 
 function renderCollection() {
   const search = $("collection-search").value.trim().toLowerCase();
-  const results = coins.filter(coin=>owns(coin) &&
-    [coin.name,coin.country,coin.denomination,...getYears(coin)].join(" ").toLowerCase().includes(search));
-  $("collection-grid").innerHTML = results.length?results.map(coin=>cardHTML(coin,"collection")).join(""):'<div class="empty">Your collection is empty, or no coins match. Visit Coin Index and mark a coin as owned.</div>';
+
+  const results = coins.filter(coin =>
+    owns(coin) &&
+    [
+      coin.name,
+      coin.series,
+      coin.country,
+      coin.denomination,
+      ...getYears(coin)
+    ].join(" ").toLowerCase().includes(search)
+  );
+
+  // Show designs inside the selected series
+  if (activeCollectionSeries) {
+    const seriesCoins = results.filter(
+      coin => (coin.series || coin.name) === activeCollectionSeries
+    );
+
+    if (!seriesCoins.length) {
+      activeCollectionSeries = null;
+      renderCollection();
+      return;
+    }
+
+    $("collection-grid").innerHTML = `
+      <div class="series-heading">
+        <button class="btn btn-secondary collection-series-back">
+          ← Back to Collection
+        </button>
+        <h2>${escapeHTML(activeCollectionSeries)}</h2>
+        <p>${seriesCoins.length} owned design(s)</p>
+      </div>
+      ${seriesCoins.map(coin =>
+        cardHTML(coin, "collection")
+      ).join("")}
+    `;
+
+    return;
+  }
+
+  // Group owned designs by series
+  const groups = {};
+
+  results.forEach(coin => {
+    const name = coin.series || coin.name;
+
+    if (!groups[name]) groups[name] = [];
+    groups[name].push(coin);
+  });
+
+  const seriesNames = Object.keys(groups).sort();
+
+  $("collection-grid").innerHTML = seriesNames.length
+    ? seriesNames.map(name => {
+        const group = groups[name];
+        const firstCoin = group[0];
+
+        return `
+          <article class="series-card">
+            <div class="series-art">
+              ${coinArt(firstCoin)}
+            </div>
+            <div class="series-info">
+              <div class="series-country">
+                ${escapeHTML(firstCoin.country)}
+              </div>
+              <h3>${escapeHTML(name)}</h3>
+              <p>${group.length} owned design(s)</p>
+              <button
+                class="btn btn-primary collection-series-open"
+                data-series="${escapeHTML(name)}">
+                Explore Collection →
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("")
+    : '<div class="empty">Your collection is empty, or no coins match.</div>';
 }
 
 function renderProfile() {
@@ -1564,6 +1640,21 @@ async function initializeCoinly() {
 setAuthMode(true);
 initializeCoinly();
 document.addEventListener("click", event => {
+  // OPEN A SERIES IN MY COLLECTION
+const collectionOpen = event.target.closest(".collection-series-open");
+
+if (collectionOpen) {
+  activeCollectionSeries = collectionOpen.dataset.series;
+  renderCollection();
+  return;
+}
+
+// RETURN TO COLLECTION SERIES
+if (event.target.closest(".collection-series-back")) {
+  activeCollectionSeries = null;
+  renderCollection();
+  return;
+}
   const openButton = event.target.closest(".series-open");
 
   if (openButton) {
