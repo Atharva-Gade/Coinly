@@ -1442,6 +1442,24 @@ document.addEventListener("change",event=>{
 
 /* COIN CARD BUTTONS */
 document.addEventListener("click",event=>{
+
+  // OPEN A SERIES
+  const openButton = event.target.closest(".series-open");
+  if (openButton) {
+    activeSeries = openButton.dataset.series;
+    renderCatalogue();
+    return;
+  }
+
+  // GO BACK TO SERIES LIST
+  const backButton = event.target.closest(".series-back");
+  if (backButton) {
+    activeSeries = null;
+    renderCatalogue();
+    return;
+  }
+
+  // EXISTING COIN CARD BUTTONS
   const card = event.target.closest(".coin-card");
   if (!card) return;
   const coin = findCoinFromElement(event.target);
