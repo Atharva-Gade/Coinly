@@ -1230,8 +1230,8 @@ function renderCatalogue() {
   // SERIES OPEN: display individual coins
   if (activeSeries) {
     const seriesCoins = results.filter(
-      coin => coin.series === activeSeries
-    );
+  coin => (coin.series || coin.name) === activeSeries
+);
 
     if (!seriesCoins.length) {
       activeSeries = null;
