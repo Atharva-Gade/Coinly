@@ -761,6 +761,7 @@ main,
   <button class="nav-btn active" data-page="catalogue">Coin Index</button>
   <button class="nav-btn" data-page="collection">My Collection</button>
   <button class="nav-btn" data-page="profile">My Profile</button>
+  <button class="nav-btn" data-page="settings">Settings</button>
 </nav>
 
 <main>
@@ -802,6 +803,28 @@ main,
       <div style="margin-top:20px"><button class="btn btn-secondary" id="profile-export">Download my collection CSV</button></div>
     </div>
   </section>
+<section id="settings-page" class="hidden">
+  <div class="profile-panel">
+    <div class="eyebrow">Preferences</div>
+    <h2>Settings</h2>
+    <p>Customize how Coinly looks.</p>
+
+    <div class="theme-settings">
+      <h3>Appearance</h3>
+      <p>Choose your preferred theme.</p>
+
+      <div class="theme-options">
+        <button class="theme-option" data-theme-choice="light">
+          ☀️ Light
+        </button>
+
+        <button class="theme-option" data-theme-choice="dark">
+          🌙 Dark
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 <footer>Coinly · Every coin has a story · A personal collector project</footer>
 </div>
@@ -1529,17 +1552,38 @@ function renderAll() {
 
 function showPage(page) {
   currentPage = page;
-  document.querySelectorAll(".nav-btn").forEach(button=>button.classList.toggle("active",button.dataset.page===page));
-  $("catalogue-page").classList.toggle("hidden",page!=="catalogue");
-  $("collection-page").classList.toggle("hidden",page!=="collection");
-  $("profile-page").classList.toggle("hidden",page!=="profile");
+
+  document.querySelectorAll(".nav-btn").forEach(button =>
+    button.classList.toggle("active", button.dataset.page === page)
+  );
+
+  $("catalogue-page").classList.toggle("hidden", page !== "catalogue");
+  $("collection-page").classList.toggle("hidden", page !== "collection");
+  $("profile-page").classList.toggle("hidden", page !== "profile");
+  $("settings-page").classList.toggle("hidden", page !== "settings");
+
   const content = {
-    catalogue:["Explore World Coins","Browse one entry per coin design. Record the year or years of the examples you own."],
-    collection:["My Collection","Your saved coin designs and the years you have recorded."],
-    profile:["My Profile","Track your collection progress across countries."]
+    catalogue: [
+      "Explore World Coins",
+      "Browse one entry per coin design. Record the year or years of the examples you own."
+    ],
+    collection: [
+      "My Collection",
+      "Your saved coin designs and the years you have recorded."
+    ],
+    profile: [
+      "My Profile",
+      "Track your collection progress across countries."
+    ],
+    settings: [
+      "Settings",
+      "Customize your Coinly experience."
+    ]
   };
+
   $("page-title").textContent = content[page][0];
   $("page-subtitle").textContent = content[page][1];
+
   renderAll();
 }
 
