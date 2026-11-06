@@ -772,6 +772,28 @@ main,
 #settings-page .profile-panel p {
   color: #FFFFFF;
 }
+/* THEME-AWARE NAVIGATION BUTTONS */
+#app nav .nav-btn {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid #D78E28;
+  border-radius: 12px;
+  padding: 12px 18px;
+}
+
+#app nav .nav-btn.active {
+  background: var(--gold);
+  color: #172033;
+  border: 1px solid #D78E28;
+  font-weight: 700;
+}
+
+/* GOLD BORDERS ON CARDS */
+.coin-card,
+.profile-panel,
+.stat {
+  border: 1px solid #D78E28;
+}
 </style>
 </head>
 <body>
