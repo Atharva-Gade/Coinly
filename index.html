@@ -617,9 +617,9 @@ main,
 }
 
 #collection-page #collection-grid > :not(.coin-card) {
-  background: #14223A !important;
-  color: #FFFFFF !important;
-  border: 1px solid rgba(215, 142, 40, 0.2);
+  background: var(--card) !important;
+  color: var(--ink) !important;
+  border: 1px solid #D78E28;
   border-radius: 18px;
 }
 
@@ -692,12 +692,18 @@ main,
 /* COINLY SERIES BROWSER */
 
 .series-card {
-  background: #14223A;
-  color: #FFFFFF;
-  border: 1px solid rgba(215, 142, 40, 0.25);
+  background: var(--card) !important;
+  color: var(--ink) !important;
+  border: 1px solid #D78E28 !important;
   border-radius: 20px;
   padding: 20px;
   transition: all 0.25s ease;
+}
+
+.series-card h3,
+.series-card p,
+.series-card .series-country {
+  color: var(--ink) !important;
 }
 
 .series-card:hover {
