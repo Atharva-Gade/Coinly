@@ -448,7 +448,7 @@ main,
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(11, 21, 39, 0.75) !important; /* Semi-transparent dark base */
+  background: rgba(11, 21, 39, 0.40) !important; /* Semi-transparent dark base */
   backdrop-filter: blur(16px);                  /* The frosted glass blur effect */
   -webkit-backdrop-filter: blur(16px);          /* Safari support */
   border-bottom: 1px solid rgba(215, 142, 40, 0.25); /* Subtle gold rim */
@@ -458,27 +458,38 @@ main,
   gap: 10px;
 }
 
-/* Navigation buttons */
+/* COINLY GLOWING LIQUID BUTTONS */
 #app nav .nav-btn {
-  background: transparent !important;
+  background: rgba(255, 255, 255, 0.04) !important;
   color: #B8C5D8 !important;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 11px 18px;
-  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Hover */
+/* Hover Liquid Glow */
 #app nav .nav-btn:hover {
-  background: #203552 !important;
+  background: rgba(32, 53, 82, 0.5) !important;
   color: #FFFFFF !important;
+  border-color: rgba(215, 142, 40, 0.6);
+  box-shadow: 0 0 15px rgba(215, 142, 40, 0.35),
+              inset 0 0 10px rgba(215, 142, 40, 0.15);
+  transform: translateY(-1px);
 }
 
-/* Active tab */
+/* Active State Liquid Glow */
 #app nav .nav-btn.active {
-  background: #263B59 !important;
-  color: #D78E28 !important;
+  background: rgba(38, 59, 89, 0.7) !important;
+  color: #F4BD59 !important;
   border-color: #D78E28;
+  box-shadow: 0 0 20px rgba(215, 142, 40, 0.5),
+              inset 0 0 12px rgba(215, 142, 40, 0.25);
+  font-weight: 700;
 }
 /* COINLY DARK CATALOGUE TOOLBAR */
 #catalogue-page .toolbar {
