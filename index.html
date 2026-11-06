@@ -96,26 +96,28 @@ footer{border-top:1px solid var(--border);text-align:center;padding:24px 15px;co
 
 #auth-screen.auth-wrap {
   position: relative;
-  overflow: hidden; /* Ensures the blurred background doesn't bleed outside the container */
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 #auth-screen.auth-wrap::before {
   content: "";
-  position: absolute;
+  position: fixed; /* Use fixed so it spans the entire viewport */
   inset: 0;
   z-index: -1;
   background: url("./coinly-login-bg.png") center center / cover no-repeat;
-  /* Apply the blur effect here (adjust '8px' to make it more or less blurry) */
   filter: blur(8px);
-  /* Slightly scale up to prevent blurred edges from creating a white/transparent border */
   transform: scale(1.05);
   pointer-events: none;
 }
 
-/* Optional: Add a separate dark overlay if you still want the gradient tint on top of the blur */
 #auth-screen.auth-wrap::after {
   content: "";
-  position: absolute;
+  position: fixed; /* Use fixed here as well */
   inset: 0;
   z-index: -1;
   background: linear-gradient(
