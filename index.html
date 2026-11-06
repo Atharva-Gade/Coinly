@@ -9,9 +9,33 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
-  --bg:#f4f2ec; --card:#fff; --ink:#20231f; --muted:#777970;
-  --green:#245943; --green-light:#e5efe7; --gold:#c69a45;
-  --border:#e5e2d9; --red:#a33b32;
+  --bg: #f4f2ec;
+  --card: #ffffff;
+  --ink: #20231f;
+  --muted: #777970;
+  --green: #245943;
+  --green-light: #e5efe7;
+  --gold: #c69a45;
+  --border: #e5e2d9;
+  --red: #a33b32;
+
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --nav-border: rgba(198, 154, 69, 0.35);
+}
+
+:root[data-theme="dark"] {
+  --bg: #080F1E;
+  --card: #14223A;
+  --ink: #FFFFFF;
+  --muted: #B0BACB;
+  --green: #D78E28;
+  --green-light: #203552;
+  --gold: #D78E28;
+  --border: rgba(215, 142, 40, 0.35);
+  --red: #ff7777;
+
+  --nav-bg: rgba(11, 21, 39, 0.85);
+  --nav-border: rgba(215, 142, 40, 0.25);
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
@@ -25,9 +49,6 @@ header{background:#173e30;color:white;padding:22px 6%;display:flex;justify-conte
 .brand p{margin:5px 0 0;color:#d4dfd5;font-size:13px}
 .account-area{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
 .account-area span{font-size:13px;color:#e1e9e2}
-nav{display:flex;gap:8px;padding:12px 6%;background:white;border-bottom:1px solid var(--border);overflow-x:auto}
-.nav-btn{border:0;background:transparent;padding:12px 16px;border-radius:8px;white-space:nowrap;color:var(--muted)}
-.nav-btn.active{background:var(--green-light);color:var(--green);font-weight:700}
 main{max-width:1200px;margin:auto;padding:30px 22px 65px}
 .hero{margin-bottom:25px}
 .eyebrow{color:var(--green);text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800}
@@ -71,7 +92,15 @@ h2{margin:8px 0;font-size:30px}
 .year-chip button{border:0;background:none;color:inherit;padding:0;font-weight:800;font-size:15px}
 .card-actions{display:flex;justify-content:flex-end}
 .empty{text-align:center;padding:45px 15px;color:var(--muted);background:white;border-radius:12px;border:1px dashed var(--border);grid-column:1/-1}
-.profile-panel,.auth-panel{background:white;border:1px solid var(--border);border-radius:14px;padding:25px;margin-top:20px}
+.profile-panel,
+.auth-panel {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 25px;
+  margin-top: 20px;
+}
 .progress-track{height:10px;background:#eae8e0;border-radius:20px;overflow:hidden;margin:12px 0}
 .progress-fill{height:100%;background:var(--green);width:0%;transition:width .2s}
 .notice{padding:13px;background:#f5f0df;border-radius:8px;color:#6b592f;font-size:12px;line-height:1.5;margin-top:18px}
@@ -243,7 +272,8 @@ body {
   margin: 0;
   min-height: 100%;
   width: 100%;
-  background: #071020 !important;
+  background: var(--bg) !important;
+  color: var(--ink);
 }
 
 /* Background image ONLY on login screen */
@@ -292,7 +322,15 @@ body {
   color: #FFFFFF !important;
 }
 .coin-card {
-  background-color: #EDCB9C !important;
+  min-width: 0;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 /* =================================
@@ -309,8 +347,8 @@ body {
 #app,
 main,
 .page-content {
-  background-color: #080F1E;
-  color: #FFFFFF;
+  background-color: var(--bg);
+  color: var(--ink);
 }
 
 /* Coin cards */
@@ -450,11 +488,11 @@ main,
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(11, 21, 39, 0.40) !important; /* Semi-transparent dark base */
-  backdrop-filter: blur(16px);                  /* The frosted glass blur effect */
-  -webkit-backdrop-filter: blur(16px);          /* Safari support */
-  border-bottom: 1px solid rgba(215, 142, 40, 0.25); /* Subtle gold rim */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Depth shadow */
+  background: var(--nav-bg) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   padding: 12px 20px;
   display: flex;
   gap: 10px;
@@ -1560,7 +1598,32 @@ function renderAll() {
   renderCollection();
   renderProfile();
 }
+// THEME SETTINGS
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
 
+  localStorage.setItem("coinly-theme", theme);
+
+  document.querySelectorAll(".theme-option").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.themeChoice === theme
+    );
+  });
+}
+
+// Load saved theme, or use Light by default
+const savedTheme = localStorage.getItem("coinly-theme") || "light";
+applyTheme(savedTheme);
+
+// Handle theme selection
+document.addEventListener("click", event => {
+  const themeButton = event.target.closest(".theme-option");
+
+  if (!themeButton) return;
+
+  applyTheme(themeButton.dataset.themeChoice);
+});
 function showPage(page) {
   currentPage = page;
 
