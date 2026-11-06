@@ -746,8 +746,8 @@ main,
   color: #B8C5D8;
 }
 #settings-page .profile-panel {
-  background: #14223A;
-  color: #FFFFFF;
+  background: var(--card) !important;
+  color: var(--ink) !important;
   border: 1px solid #D78E28;
 }
 
@@ -776,7 +776,12 @@ main,
 .coin-card,
 .profile-panel,
 .stat {
+  background: var(--card) !important;
+  color: var(--ink) !important;
   border: 1px solid #D78E28;
+  border-radius: 18px;
+  padding: 20px;
+  transition: all 0.25s ease;
 }
 </style>
 </head>
