@@ -383,9 +383,7 @@ body {
 }
 
 .profile-panel,
-.stat {
-  border: 1px solid #D78E28 !important;
-}
+
 /* =================================
    COINLY - PREMIUM DARK THEME
 ================================= */
@@ -404,31 +402,6 @@ main,
   color: var(--ink);
 }
 
-/* COINLY STATISTIC CARDS */
-.stat {
-  background: #14223A !important;
-  color: #FFFFFF !important;
-  border: 1px solid rgba(215, 142, 40, 0.25);
-  border-radius: 18px !important;
-  padding: 20px;
-  transition: all 0.25s ease;
-}
-
-.stat:hover {
-  background: #203552 !important;
-  transform: translateY(-4px);
-  border-color: #D78E28;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.stat-label,
-.stat-number {
-  color: #FFFFFF !important;
-}
-
-.stat-note {
-  color: #B8C5D8 !important;
-}
 
 /* COINLY DARK HEADER */
 #app > header {
@@ -784,14 +757,6 @@ main,
 /* GOLD BORDERS ON CARDS */
 .coin-card,
 .profile-panel,
-.stat {
-  background: var(--card) !important;
-  color: var(--ink) !important;
-  border: 1px solid #D78E28;
-  border-radius: 18px;
-  padding: 20px;
-  transition: all 0.25s ease;
-}
 /* COIN CARD INPUTS AND YEAR SELECTORS */
 .coin-card input,
 .coin-card select,
@@ -814,6 +779,31 @@ main,
 .coin-card p,
 .coin-card span {
   color: var(--ink);
+}
+/* THEME-AWARE STATISTICS CARDS */
+.stat {
+  background: var(--card) !important;
+  color: var(--ink) !important;
+  border: 1px solid #D78E28 !important;
+  border-radius: 18px;
+  padding: 20px;
+  transition: all 0.25s ease;
+}
+
+.stat:hover {
+  background: var(--green-light) !important;
+  transform: translateY(-4px);
+  border-color: #D78E28 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-label,
+.stat-number {
+  color: var(--ink) !important;
+}
+
+.stat-note {
+  color: var(--muted) !important;
 }
 </style>
 </head>
